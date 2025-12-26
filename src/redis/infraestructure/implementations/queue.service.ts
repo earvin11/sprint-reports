@@ -4,8 +4,7 @@ import { QueuesPort } from 'src/redis/domain/queues.port';
 import { QueueName } from 'src/shared/enums/queue-names.enum';
 
 export class QueueService implements QueuesPort {
-  constructor() // Inyectar queues
-  // @InjectQueue(QueueName.ROUND_SET_JACKPOT)
+  constructor() // @InjectQueue(QueueName.ROUND_SET_JACKPOT) // Inyectar queues
   // private readonly setJackpotQueue: Queue,
   {}
 

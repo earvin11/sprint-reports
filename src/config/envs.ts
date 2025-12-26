@@ -7,6 +7,8 @@ interface EnvVars {
   REDIS_PORT: number;
   REDIS_PASSWORD: string;
 
+  MONGODB_URL: string;
+
   SEQ_URL: string;
   SEQ_API_KEY: string;
   SEQ_WORKSAPCE: string;
@@ -18,6 +20,8 @@ const evnsSchema = joi
     REDIS_HOST: joi.string().required(),
     REDIS_PORT: joi.string().required(),
     REDIS_PASSWORD: joi.string().required(),
+
+    MONGODB_URL: joi.string().required(),
 
     SEQ_URL: joi.string(),
     SEQ_API_KEY: joi.string(),
@@ -38,6 +42,8 @@ export const envs = {
   redisHost: envVars.REDIS_HOST,
   redisPort: envVars.REDIS_PORT,
   redisPassword: envVars.REDIS_PASSWORD,
+
+  mongoUri: envVars.MONGODB_URL,
 
   // rabbitMqUrl: `amqp://${envVars.RABBITMQ_USER}:${envVars.RABBITMQ_PASS}@${envVars.RABBITMQ_HOST}:${envVars.RABBITMQ_PORT}`,
 

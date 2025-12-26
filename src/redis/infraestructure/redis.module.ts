@@ -78,6 +78,12 @@ import { RedisStoreService } from './implementations/redis-store.service';
       useExisting: RedisStoreService,
     },
   ],
-  exports: ['REDIS_CLIENT', 'REDIS_PUBLISHER', 'REDIS_SUBSCRIBER', RedisRpcPort, QueuesPort],
+  exports: [
+    'REDIS_CLIENT',
+    'REDIS_PUBLISHER',
+    'REDIS_SUBSCRIBER',
+    RedisRpcPort,
+    QueuesPort,
+  ],
 })
 export class RedisModule {}
