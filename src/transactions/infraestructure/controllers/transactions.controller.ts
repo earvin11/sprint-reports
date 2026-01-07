@@ -1,7 +1,11 @@
 import { Controller, Inject } from '@nestjs/common';
 import Redis from 'ioredis';
 import { LoggerPort } from 'src/logging/domain/logger.port';
-import { transactionsRpcChannels } from '../enums/transactions-channels.enum';
+import {
+  transactionsRpcChannels,
+  TransactionsRpcChannelsEnum,
+} from '../enums/transactions-channels.enum';
+import { TransactionsUseCases } from 'src/transactions/application/transactions.use-cases';
 
 @Controller('transactions')
 export class TransactionsController {
@@ -9,6 +13,7 @@ export class TransactionsController {
     @Inject('REDIS_SUBSCRIBER') private readonly redisSub: Redis,
     @Inject('REDIS_PUBLISHER') private readonly redisPub: Redis,
     private readonly loggerPort: LoggerPort,
+    private readonly transactionsUseCases: TransactionsUseCases,
   ) {}
 
   onModuleInit() {
@@ -26,6 +31,15 @@ export class TransactionsController {
       const { correlationId, data, replyChannel } = payload;
 
       switch (channel) {
+        case TransactionsRpcChannelsEnum.FIND_ALL: {
+          const resp = await this.transactionsUseCases.findAll(data.data);
+
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
       }
     });
   }
