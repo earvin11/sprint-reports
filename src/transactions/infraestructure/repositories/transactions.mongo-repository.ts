@@ -1,9 +1,16 @@
+import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
-import { Connection, Types, Aggregate } from 'mongoose';
+import { Connection, Types } from 'mongoose';
+import { LoggerPort } from 'src/logging/domain/logger.port';
+import { formatDate } from 'src/shared/helpers/format-date.helper';
 import { TransactionsRepository } from 'src/transactions/domain/transactions.repository';
 
+@Injectable()
 export class TransactionsMongoRepository implements TransactionsRepository {
-  constructor(@InjectConnection() private readonly connection: Connection) {}
+  constructor(
+    @InjectConnection() private readonly connection: Connection,
+    private readonly loggerPort: LoggerPort,
+  ) {}
 
   async findAll(filterData: Record<string, any>): Promise<any> {
     const {
@@ -22,8 +29,8 @@ export class TransactionsMongoRepository implements TransactionsRepository {
 
     if (fromDate && toDate) {
       filter['createdAt'] = {
-        // $lte: FormatDate(fromDate, toDate).end_date,
-        // $gte: FormatDate(fromDate, toDate).start_date,
+        $lte: formatDate(fromDate, toDate).end_date,
+        $gte: formatDate(fromDate, toDate).start_date,
       };
     }
 
@@ -112,12 +119,12 @@ export class TransactionsMongoRepository implements TransactionsRepository {
       //   }
 
       return {
-        // count: data.length,
+        count: data.length,
         data,
       };
     } catch (error) {
-      console.log('ERROR GROUPE TRANSACTION', error);
-      return {};
+      this.loggerPort.error('ERROR IN FIND ALL TRANSACTIONS', error);
+      throw error;
     }
   }
 }
