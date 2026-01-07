@@ -5,6 +5,7 @@ import { envs } from './config/envs';
 import { BullModule } from '@nestjs/bullmq';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TransactionModule } from './transactions/infraestructure/transaction.module';
+import { ProviderResultModule } from './provider-results/infraestructure/provider-result.module';
 
 @Module({
   imports: [
@@ -17,8 +18,8 @@ import { TransactionModule } from './transactions/infraestructure/transaction.mo
       },
     }),
     RedisModule,
-    TransactionModule,
+    TransactionModule, ProviderResultModule
   ],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule { }
