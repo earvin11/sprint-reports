@@ -6,6 +6,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TransactionModule } from './transactions/infraestructure/transaction.module';
 import { ProviderResultModule } from './provider-results/infraestructure/provider-result.module';
+import { HistoryCrupierModule } from './history-crupier/infraestructure/history-crupier.module';
 
 @Module({
   imports: [
@@ -17,9 +18,11 @@ import { ProviderResultModule } from './provider-results/infraestructure/provide
         password: envs.redisPassword,
       },
     }),
+    HistoryCrupierModule,
+    ProviderResultModule,
     RedisModule,
-    TransactionModule, ProviderResultModule
+    TransactionModule,
   ],
   controllers: [AppController],
 })
-export class AppModule { }
+export class AppModule {}

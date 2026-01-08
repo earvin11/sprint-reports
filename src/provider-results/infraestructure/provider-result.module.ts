@@ -6,17 +6,16 @@ import { ProviderResultRepository } from '../domain/provider-result.repository';
 import { ProviderResultUseCases } from '../application/provider-result.use-cases';
 import { ProviderResultController } from './controllers/provider-result.controller';
 
-
 @Module({
-    imports: [RedisModule, LoggerModule],
-    providers: [
-        ProviderResultMongoRepository,
-        {
-            provide: ProviderResultRepository,
-            useExisting: ProviderResultMongoRepository,
-        },
-        ProviderResultUseCases,
-    ],
-    controllers: [ProviderResultController],
+  imports: [RedisModule, LoggerModule],
+  providers: [
+    ProviderResultMongoRepository,
+    {
+      provide: ProviderResultRepository,
+      useExisting: ProviderResultMongoRepository,
+    },
+    ProviderResultUseCases,
+  ],
+  controllers: [ProviderResultController],
 })
-export class ProviderResultModule { }
+export class ProviderResultModule {}
