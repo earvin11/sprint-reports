@@ -10,4 +10,8 @@ export class TransactionsUseCases {
   async findAll(filter: Record<string, any>) {
     return await this.transactionsRepository.findAll(filter);
   }
+
+  async jackpots(filter: Record<string, any>) {
+    return await this.transactionsRepository.jackpots(filter);
+  }
 }

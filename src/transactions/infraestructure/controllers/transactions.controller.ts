@@ -14,7 +14,7 @@ export class TransactionsController {
     @Inject('REDIS_PUBLISHER') private readonly redisPub: Redis,
     private readonly loggerPort: LoggerPort,
     private readonly transactionsUseCases: TransactionsUseCases,
-  ) {}
+  ) { }
 
   onModuleInit() {
     this.redisSub
@@ -40,6 +40,19 @@ export class TransactionsController {
           );
           break;
         }
+
+        case TransactionsRpcChannelsEnum.JACKPOTS: {
+          const resp = await this.transactionsUseCases.jackpots(data.data);
+
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
+        default:
+          break;
       }
     });
   }
