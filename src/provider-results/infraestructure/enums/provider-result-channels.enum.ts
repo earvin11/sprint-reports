@@ -1,5 +1,5 @@
 export enum ProviderResultRpcChannelsEnum {
-  GET_PROVIDER_RESULTS = 'get-provider-results'
+  GET_PROVIDER_RESULTS = 'get-provider-results',
 }
 
 const values = Object.values(ProviderResultRpcChannelsEnum).filter(
